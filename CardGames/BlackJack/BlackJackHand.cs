@@ -16,6 +16,49 @@ namespace CardGames.BlackJack
             cards.Add(card);
         }
 
+        public int CompareTo(IBlackJackHand other)
+        {
+            // First, handle dead hands
+            if (!this.IsAlive())
+            {
+                if (other.IsAlive())
+                {
+                    return -1;
+                } 
+                else
+                {
+                    return 0;
+                }
+            } else if (!other.IsAlive())
+            {
+                return 1;
+            }
+
+            // Then, handle blackjacks
+            if (this.IsBlackJack())
+            {
+                if (other.IsBlackJack())
+                    return 0;
+                else
+                    return 1;
+            }
+            else if (other.IsBlackJack())
+            {
+                return -1;
+            }
+
+            // If neither party has blackjack, compare values
+            int thisValue = this.GetValue();
+            int otherValue = other.GetValue();
+
+            if (thisValue > otherValue)
+                return 1;
+            if (thisValue < otherValue)
+                return -1;
+            else
+                return 0;
+        }
+
         public int GetValue()
         {
             // We need to sum the ranks of the cards

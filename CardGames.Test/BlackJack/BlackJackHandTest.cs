@@ -59,5 +59,89 @@ namespace CardGames.Test.BlackJack
             Assert.AreEqual(20, sut.GetValue(), "BlackJackHand can't count aces");
             Assert.True(sut.IsAlive(), "BlackJackHand has no respect for aces");
         }
+
+        [Test]
+        public void CompareBlackJacks()
+        {
+            // Arrange this
+            sut.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Ace, Suit.Clubs));
+            
+            // Arrange other
+            IBlackJackHand other = new BlackJackHand();
+            other.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            other.AddCard(new Card(Rank.Ace, Suit.Clubs));
+
+            // Assert
+            Assert.AreEqual(0, sut.CompareTo(other), "BlackJacks not equal");
+        }
+
+        [Test]
+        public void CompareBlackJackTo21()
+        {
+            // Arrange this
+            sut.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Ace, Suit.Clubs));
+
+            // Arrange other
+            IBlackJackHand other = new BlackJackHand();
+            other.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            other.AddCard(new Card(Rank.Nine, Suit.Clubs));
+            other.AddCard(new Card(Rank.Two, Suit.Clubs));
+
+            // Assert
+            Assert.AreEqual(1, sut.CompareTo(other), "BlackJack doesn't win over 21");
+        }
+
+        [Test]
+        public void CompareValues()
+        {
+            // Arrange this
+            sut.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Two, Suit.Clubs));
+
+            // Arrange other
+            IBlackJackHand other = new BlackJackHand();
+            other.AddCard(new Card(Rank.Eight, Suit.Clubs));
+            other.AddCard(new Card(Rank.Nine, Suit.Clubs));
+
+            // Assert
+            Assert.AreEqual(-1, sut.CompareTo(other), "Values don't compare well");
+        }
+
+        [Test]
+        public void LiveHandWinsOverDead()
+        {
+            // Arrange this
+            sut.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Two, Suit.Clubs));
+
+            // Arrange other
+            IBlackJackHand other = new BlackJackHand();
+            other.AddCard(new Card(Rank.Eight, Suit.Clubs));
+            other.AddCard(new Card(Rank.Nine, Suit.Clubs));
+            other.AddCard(new Card(Rank.Seven, Suit.Clubs));
+
+            // Assert
+            Assert.AreEqual(1, sut.CompareTo(other), "Zombie hands win!");
+        }
+
+        [Test]
+        public void DeadHandsTie()
+        {
+            // Arrange this
+            sut.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Two, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Queen, Suit.Clubs));
+
+            // Arrange other
+            IBlackJackHand other = new BlackJackHand();
+            other.AddCard(new Card(Rank.Eight, Suit.Clubs));
+            other.AddCard(new Card(Rank.Nine, Suit.Clubs));
+            other.AddCard(new Card(Rank.Seven, Suit.Clubs));
+
+            // Assert
+            Assert.AreEqual(0, sut.CompareTo(other), "Dead Hands Don't Tie");
+        }
     }
 }

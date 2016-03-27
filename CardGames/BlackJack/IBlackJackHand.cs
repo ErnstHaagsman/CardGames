@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CardGames.BlackJack
 {
-    public interface IBlackJackHand
+    public interface IBlackJackHand : IComparable<IBlackJackHand>
     {
         void AddCard(Card card);
         int GetValue();
