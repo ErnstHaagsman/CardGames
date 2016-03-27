@@ -13,9 +13,26 @@ namespace CardGames.BlackJack
         private IDeck deck;
         private IDealer dealer;
 
+        private IPlayer player;
         public IPlayer Player
         {
-            get; set; 
+            get
+            {
+                return player;
+            }
+            set
+            {
+                if (player != null)
+                    player.onTurnFinished -= Player_onTurnFinished;
+
+                player = value;
+                player.onTurnFinished += Player_onTurnFinished;
+            } 
+        }
+
+        private void Player_onTurnFinished(IPlayer obj)
+        {
+            dealer.Play();
         }
 
         public event EventHandler<IPlayer> onPlayerWins;
@@ -63,11 +80,8 @@ namespace CardGames.BlackJack
             this.deck = deck;
             dealer = dealerFactory.getDealer(new BlackJackHand(), deck);
             dealer.Name = "Dealer";
-            Player = new Player(new BlackJackHand(), deck);
-            Player.Name = "Player";
 
             dealer.onTurnFinished += (pl) => resolveWinner();
-            Player.onTurnFinished += (pl) => dealer.Play();
         }
     }
 }

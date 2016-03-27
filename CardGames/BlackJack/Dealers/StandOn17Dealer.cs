@@ -7,7 +7,7 @@ using CardGames.Cards;
 
 namespace CardGames.BlackJack.Dealers
 {
-    class StandOn17Dealer : BaseDealer
+    public class StandOn17Dealer : BaseDealer
     {
         public override void Play()
         {

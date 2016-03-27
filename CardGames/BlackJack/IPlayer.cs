@@ -32,7 +32,7 @@ namespace CardGames.BlackJack
         /// <summary>
         /// The player's hand
         /// </summary>
-        IBlackJackHand Hand { get; }
+        IBlackJackHand Hand { get; set; }
 
         /// <summary>
         /// The player's name

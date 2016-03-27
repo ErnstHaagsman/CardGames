@@ -7,7 +7,7 @@ using CardGames.Cards;
 
 namespace CardGames.BlackJack.Dealers
 {
-    abstract class BaseDealer : Player, IDealer
+    public abstract class BaseDealer : Player, IDealer
     {
         private bool played;
 

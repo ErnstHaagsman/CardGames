@@ -32,6 +32,11 @@ namespace CardGames.BlackJack
             {
                 return hand;
             }
+            set
+            {
+                hand = value;
+                done = false;
+            }
         }
 
         public string Name { get; set; }
