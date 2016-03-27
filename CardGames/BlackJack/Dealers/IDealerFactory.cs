@@ -9,6 +9,6 @@ namespace CardGames.BlackJack.Dealers
 {
     public interface IDealerFactory
     {
-        IDealer getDealer(IBlackJackHand hand, IDeck deck, IPlayerDone done);
+        IDealer getDealer(IBlackJackHand hand, IDeck deck);
     }
 }

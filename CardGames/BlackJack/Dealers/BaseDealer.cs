@@ -32,8 +32,8 @@ namespace CardGames.BlackJack.Dealers
             played = true;
         }
 
-        public BaseDealer(IBlackJackHand hand, IDeck deck, IPlayerDone done) 
-            : base(hand, deck, done)
+        public BaseDealer(IBlackJackHand hand, IDeck deck) 
+            : base(hand, deck)
         {
 
         }

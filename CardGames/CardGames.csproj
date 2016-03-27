@@ -44,7 +44,6 @@
     <Compile Include="BlackJack\Dealers\IDealer.cs" />
     <Compile Include="BlackJack\Dealers\IDealerFactory.cs" />
     <Compile Include="BlackJack\IPlayer.cs" />
-    <Compile Include="BlackJack\IPlayerDone.cs" />
     <Compile Include="BlackJack\Player.cs" />
     <Compile Include="BlackJack\Dealers\StandOn17Dealer.cs" />
     <Compile Include="BlackJack\Dealers\StandOn17DealerFactory.cs" />

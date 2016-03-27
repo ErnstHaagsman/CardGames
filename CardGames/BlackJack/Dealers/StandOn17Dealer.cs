@@ -20,8 +20,8 @@ namespace CardGames.BlackJack.Dealers
             Stand();
         }
 
-        public StandOn17Dealer(IBlackJackHand hand, IDeck deck, IPlayerDone done) 
-            : base(hand, deck, done)
+        public StandOn17Dealer(IBlackJackHand hand, IDeck deck) 
+            : base(hand, deck)
         {
 
         }

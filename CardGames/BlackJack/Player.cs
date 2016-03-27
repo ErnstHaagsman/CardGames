@@ -11,12 +11,12 @@ namespace CardGames.BlackJack
     {
         private IBlackJackHand hand;
         private IDeck deck;
-        private IPlayerDone playerDone;
         private bool done;
 
         public event EventHandler<Card> onReceivedCard;
         public event Action<IPlayer> onPlayerDied;
         public event Action<IPlayer> onBlackJack;
+        public event Action<IPlayer> onTurnFinished;
 
         public bool Alive
         {
@@ -87,6 +87,15 @@ namespace CardGames.BlackJack
             }
         }
 
+        protected virtual void OnRaiseTurnFinished()
+        {
+            Action<IPlayer> handler = onTurnFinished;
+            if (handler != null)
+            {
+                handler(this);
+            }
+        }
+
         public void Stand()
         {
             doneWithTurn();
@@ -95,7 +104,7 @@ namespace CardGames.BlackJack
         private void doneWithTurn()
         {
             done = true;
-            playerDone.PlayerDone(this);
+            OnRaiseTurnFinished();
         }
 
         public void Initialize()
@@ -109,11 +118,10 @@ namespace CardGames.BlackJack
             }
         }
 
-        public Player(IBlackJackHand hand, IDeck deck, IPlayerDone playerDone)
+        public Player(IBlackJackHand hand, IDeck deck)
         {
             this.hand = hand;
             this.deck = deck;
-            this.playerDone = playerDone;
         }
     }
 }

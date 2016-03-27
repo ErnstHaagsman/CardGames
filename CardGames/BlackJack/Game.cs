@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CardGames.BlackJack
 {
-    public class Game : IPlayerDone
+    public class Game
     {
         private IDeck deck;
         private IDealer dealer;
@@ -20,18 +20,6 @@ namespace CardGames.BlackJack
 
         public event EventHandler<IPlayer> onPlayerWins;
         public event EventHandler<IPlayer> onPlayerTies;
-
-        public void PlayerDone(IPlayer player)
-        {
-            if(player == dealer)
-            {
-                resolveWinner();
-            }
-            else
-            {
-                dealer.Play();
-            }
-        }
 
         private void resolveWinner()
         {
@@ -73,10 +61,13 @@ namespace CardGames.BlackJack
         public Game(IDeck deck, IDealerFactory dealerFactory)
         {
             this.deck = deck;
-            dealer = dealerFactory.getDealer(new BlackJackHand(), deck, this);
+            dealer = dealerFactory.getDealer(new BlackJackHand(), deck);
             dealer.Name = "Dealer";
-            Player = new Player(new BlackJackHand(), deck, this);
+            Player = new Player(new BlackJackHand(), deck);
             Player.Name = "Player";
+
+            dealer.onTurnFinished += (pl) => resolveWinner();
+            Player.onTurnFinished += (pl) => dealer.Play();
         }
     }
 }

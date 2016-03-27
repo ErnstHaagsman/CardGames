@@ -25,6 +25,11 @@ namespace CardGames.BlackJack
         event Action<IPlayer> onBlackJack;
 
         /// <summary>
+        /// This is fired when a player is done with their turn
+        /// </summary>
+        event Action<IPlayer> onTurnFinished;
+
+        /// <summary>
         /// The player's hand
         /// </summary>
         IBlackJackHand Hand { get; }

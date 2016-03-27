@@ -9,9 +9,9 @@ namespace CardGames.BlackJack.Dealers
 {
     public class StandOn17DealerFactory : IDealerFactory
     {
-        public IDealer getDealer(IBlackJackHand hand, IDeck deck, IPlayerDone done)
+        public IDealer getDealer(IBlackJackHand hand, IDeck deck)
         {
-            return new StandOn17Dealer(hand, deck, done);
+            return new StandOn17Dealer(hand, deck);
         }
     }
 }
