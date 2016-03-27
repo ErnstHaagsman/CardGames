@@ -17,7 +17,9 @@ namespace CardGames.BlackJack.Dealers
             {
                 Hit();
             }
-            Stand();
+
+            if(Alive)
+                Stand();
         }
 
         public StandOn17Dealer(IBlackJackHand hand, IDeck deck) 

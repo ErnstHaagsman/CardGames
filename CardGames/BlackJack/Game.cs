@@ -81,7 +81,13 @@ namespace CardGames.BlackJack
             dealer = dealerFactory.getDealer(new BlackJackHand(), deck);
             dealer.Name = "Dealer";
 
-            dealer.onTurnFinished += (pl) => resolveWinner();
+            dealer.onTurnFinished += Dealer_onTurnFinished; ;
+        }
+
+        private void Dealer_onTurnFinished(IPlayer obj)
+        {
+            resolveWinner();
+            dealer.onTurnFinished -= Dealer_onTurnFinished;
         }
     }
 }
