@@ -12,6 +12,10 @@ namespace CardGames.BlackJack
         private IBlackJackHand hand;
         private IDeck deck;
         private IPlayerDone playerDone;
+        private bool done;
+
+        public event EventHandler<Card> onReceivedCard;
+        public event Action<IPlayer> onPlayerDied;
 
         public bool Alive
         {
@@ -31,19 +35,56 @@ namespace CardGames.BlackJack
 
         public string Name { get; set; }
 
+        public bool Done
+        {
+            get
+            {
+                return done;
+            }
+        }
+
         public Card Hit()
         {
             Card newCard = deck.NextCard();
 
             hand.AddCard(newCard);
+            OnRaiseReceivedCard(newCard);
+
             if (!Alive)
-                playerDone.PlayerDone(this);
+            {
+                OnRaisePlayerDied();
+                doneWithTurn();
+            }
 
             return newCard;
         }
 
+        protected virtual void OnRaiseReceivedCard(Card card)
+        {
+            EventHandler<Card> handler = onReceivedCard;
+            if(handler != null)
+            {
+                handler(this, card);
+            }
+        }
+
+        protected virtual void OnRaisePlayerDied()
+        {
+            Action<IPlayer> handler = onPlayerDied;
+            if (handler != null)
+            {
+                handler(this);
+            }
+        }
+
         public void Stand()
         {
+            doneWithTurn();
+        }
+
+        private void doneWithTurn()
+        {
+            done = true;
             playerDone.PlayerDone(this);
         }
 

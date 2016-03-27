@@ -26,13 +26,24 @@ namespace CardGames.BlackJackCLI
             game.onPlayerTies +=
                 (s, pl) => Console.WriteLine("You tied!");
 
+            game.Player.onPlayerDied +=
+                (pl) =>
+                {
+                    Console.WriteLine("You died :(");
+                };
+
+            game.Player.onReceivedCard +=
+                (pl, card) =>
+                {
+                    Console.WriteLine("You got a {0}", card);
+                };
+
             game.StartGame();
 
             Console.WriteLine("Welcome to BlackJack!");
             Console.WriteLine("The Dealer Open Card is: {0}", game.DealerOpenCard());
 
-            bool going = true;
-            while (going)
+            while (!game.Player.Done)
             {
                 Console.WriteLine("Your cards:");
                 Console.WriteLine();
@@ -54,16 +65,10 @@ namespace CardGames.BlackJackCLI
                         case "H":
                             hasInput = true;
                             game.Player.Hit();
-                            if (!game.Player.Alive)
-                            {
-                                Console.WriteLine("You died :(");
-                                going = false;
-                            }
                             break;
                         case "S":
                             hasInput = true;
                             game.Player.Stand();
-                            going = false;
                             break;
                         default:
                             Console.WriteLine("Please press 'H' to hit, or 'S' to stand");
