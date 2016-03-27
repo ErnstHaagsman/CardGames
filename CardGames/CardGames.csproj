@@ -38,15 +38,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackJack\BlackJackHand.cs" />
+    <Compile Include="BlackJack\Dealers\BaseDealer.cs" />
     <Compile Include="BlackJack\Game.cs" />
     <Compile Include="BlackJack\IBlackJackHand.cs" />
-    <Compile Include="BlackJack\IDealer.cs" />
-    <Compile Include="BlackJack\IDealerFactory.cs" />
+    <Compile Include="BlackJack\Dealers\IDealer.cs" />
+    <Compile Include="BlackJack\Dealers\IDealerFactory.cs" />
     <Compile Include="BlackJack\IPlayer.cs" />
     <Compile Include="BlackJack\IPlayerDone.cs" />
     <Compile Include="BlackJack\Player.cs" />
-    <Compile Include="BlackJack\StandOn17Dealer.cs" />
-    <Compile Include="BlackJack\StandOn17DealerFactory.cs" />
+    <Compile Include="BlackJack\Dealers\StandOn17Dealer.cs" />
+    <Compile Include="BlackJack\Dealers\StandOn17DealerFactory.cs" />
     <Compile Include="CardGameException.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />

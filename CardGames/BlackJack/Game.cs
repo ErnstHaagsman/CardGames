@@ -1,4 +1,5 @@
-﻿using CardGames.Cards;
+﻿using CardGames.BlackJack.Dealers;
+using CardGames.Cards;
 using System;
 using System.Collections.Generic;
 using System.Linq;

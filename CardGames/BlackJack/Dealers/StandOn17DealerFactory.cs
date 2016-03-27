@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CardGames.Cards;
 
-namespace CardGames.BlackJack
+namespace CardGames.BlackJack.Dealers
 {
     public class StandOn17DealerFactory : IDealerFactory
     {

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using CardGames.Cards;
 
-namespace CardGames.BlackJack
+namespace CardGames.BlackJack.Dealers
 {
-    class StandOn17Dealer : Player, IDealer
+    abstract class BaseDealer : Player, IDealer
     {
         private bool played;
 
@@ -27,17 +27,12 @@ namespace CardGames.BlackJack
                 return new Card[0];
         }
 
-        public void Play()
+        public virtual void Play()
         {
-            while (Hand.GetValue() < 17)
-            {
-                Hit();
-            }
-            Stand();
             played = true;
         }
 
-        public StandOn17Dealer(IBlackJackHand hand, IDeck deck, IPlayerDone done) 
+        public BaseDealer(IBlackJackHand hand, IDeck deck, IPlayerDone done) 
             : base(hand, deck, done)
         {
 

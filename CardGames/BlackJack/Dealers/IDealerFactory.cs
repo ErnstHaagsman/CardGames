@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CardGames.BlackJack
+namespace CardGames.BlackJack.Dealers
 {
     public interface IDealerFactory
     {
