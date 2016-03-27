@@ -113,7 +113,7 @@ namespace CardGames.BlackJack
                 return false;
 
             if (cards.Where(x => x.Rank == Rank.Ace).Count() == 1 &&
-                cards.Where(x => x.Rank == Rank.Ten).Count() == 1)
+                cards.Where(x => (int)x.Rank >= 10 && (int)x.Rank < 14).Count() == 1)
                return true;
 
             return false;
