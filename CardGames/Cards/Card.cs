@@ -44,7 +44,7 @@ namespace CardGames.Cards
 
         public override string ToString()
         {
-            return String.Format("{G} of {G}", Rank, Suit);
+            return String.Format("{0} of {1}", Rank, Suit);
         }
 
         public override int GetHashCode()

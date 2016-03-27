@@ -10,6 +10,7 @@ namespace CardGames.BlackJack
     public interface IBlackJackHand : IComparable<IBlackJackHand>
     {
         void AddCard(Card card);
+        Card[] GetCards();
         int GetValue();
         bool IsAlive();
         bool IsBlackJack();

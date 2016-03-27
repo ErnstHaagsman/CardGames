@@ -59,6 +59,11 @@ namespace CardGames.BlackJack
                 return 0;
         }
 
+        public Card[] GetCards()
+        {
+            return cards.ToArray();
+        }
+
         public int GetValue()
         {
             // We need to sum the ranks of the cards
