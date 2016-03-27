@@ -69,10 +69,10 @@ namespace CardGames.BlackJack
             return dealer.GetCards();
         }
 
-        public Game(IDeck deck)
+        public Game(IDeck deck, IDealerFactory dealerFactory)
         {
             this.deck = deck;
-            dealer = new StandOn17Dealer(new BlackJackHand(), deck, this);
+            dealer = dealerFactory.getDealer(new BlackJackHand(), deck, this);
             dealer.Name = "Dealer";
             Player = new Player(new BlackJackHand(), deck, this);
             Player.Name = "Player";

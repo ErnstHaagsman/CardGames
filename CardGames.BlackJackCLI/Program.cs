@@ -21,7 +21,7 @@ namespace CardGames.BlackJackCLI
 
         private static void PlayGame()
         {
-            Game game = new Game(new Deck());
+            Game game = new Game(new Deck(), new StandOn17DealerFactory());
 
             game.onPlayerWins +=
                 (s, pl) => Console.WriteLine("{0} Won!", pl.Name);

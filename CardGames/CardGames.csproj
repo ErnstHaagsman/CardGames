@@ -41,10 +41,12 @@
     <Compile Include="BlackJack\Game.cs" />
     <Compile Include="BlackJack\IBlackJackHand.cs" />
     <Compile Include="BlackJack\IDealer.cs" />
+    <Compile Include="BlackJack\IDealerFactory.cs" />
     <Compile Include="BlackJack\IPlayer.cs" />
     <Compile Include="BlackJack\IPlayerDone.cs" />
     <Compile Include="BlackJack\Player.cs" />
     <Compile Include="BlackJack\StandOn17Dealer.cs" />
+    <Compile Include="BlackJack\StandOn17DealerFactory.cs" />
     <Compile Include="CardGameException.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />
