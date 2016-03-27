@@ -37,6 +37,9 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlackJack\BlackJackHand.cs" />
+    <Compile Include="BlackJack\IBlackJackHand.cs" />
+    <Compile Include="BlackJack\IPlayer.cs" />
     <Compile Include="CardGameException.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />
