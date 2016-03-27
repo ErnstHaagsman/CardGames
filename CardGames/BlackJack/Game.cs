@@ -10,11 +10,7 @@ namespace CardGames.BlackJack
     public class Game : IPlayerDone
     {
         private IDeck deck;
-        private Card dealerOpenCard = null;
-        public IPlayer Dealer
-        {
-            get; set;
-        }
+        private IDealer dealer;
 
         public IPlayer Player
         {
@@ -26,51 +22,58 @@ namespace CardGames.BlackJack
 
         public void PlayerDone(IPlayer player)
         {
-            if(player == Dealer)
+            if(player == dealer)
             {
-                int compare = Player.Hand.CompareTo(Dealer.Hand);
-                if(compare == 1)
-                {
-                    onPlayerWins(this, Player);
-                } else if (compare == -1)
-                {
-                    onPlayerWins(this, Dealer);
-                } else
-                {
-                    onPlayerTies(this, Player);
-                }
+                resolveWinner();
             }
             else
             {
-                // We should play as the dealer
-                while (Dealer.Hand.GetValue() < 17)
-                {
-                    Dealer.Hit();
-                }
-                Dealer.Stand();
+                dealer.Play();
+            }
+        }
+
+        private void resolveWinner()
+        {
+            int compare = Player.Hand.CompareTo(dealer.Hand);
+            if (compare == 1)
+            {
+                onPlayerWins(this, Player);
+            }
+            else if (compare == -1)
+            {
+                onPlayerWins(this, dealer);
+            }
+            else
+            {
+                onPlayerTies(this, Player);
             }
         }
 
         public void StartGame()
         {
             // Initial deal
-            Dealer.Hand.AddCard(deck.NextCard());
-            dealerOpenCard = deck.NextCard();
-            Dealer.Hand.AddCard(dealerOpenCard);
-            Player.Hand.AddCard(deck.NextCard());
-            Player.Hand.AddCard(deck.NextCard());
+            dealer.Initialize();
+            Player.Initialize();
+
+            if (Player.Hand.IsBlackJack() || dealer.Hand.IsBlackJack())
+                resolveWinner();
         }
 
         public Card DealerOpenCard()
         {
-            return dealerOpenCard;
+            return dealer.OpenCard;
+        }
+
+        public Card[] GetDealerCards()
+        {
+            return dealer.GetCards();
         }
 
         public Game(IDeck deck)
         {
             this.deck = deck;
-            Dealer = new Player(new BlackJackHand(), deck, this);
-            Dealer.Name = "Dealer";
+            dealer = new StandOn17Dealer(new BlackJackHand(), deck, this);
+            dealer.Name = "Dealer";
             Player = new Player(new BlackJackHand(), deck, this);
             Player.Name = "Player";
         }

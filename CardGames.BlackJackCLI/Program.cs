@@ -13,7 +13,10 @@ namespace CardGames.BlackJackCLI
         static void Main(string[] args)
         {
             while (true)
+            {
                 PlayGame();
+                Console.Clear();
+            }
         }
 
         private static void PlayGame()
@@ -41,7 +44,7 @@ namespace CardGames.BlackJackCLI
             game.StartGame();
 
             Console.WriteLine("Welcome to BlackJack!");
-            Console.WriteLine("The Dealer Open Card is: {0}", game.DealerOpenCard());
+            Console.WriteLine("The Dealer's Open Card is: {0}", game.DealerOpenCard());
 
             while (!game.Player.Done)
             {
@@ -75,6 +78,13 @@ namespace CardGames.BlackJackCLI
                             break;
                     }
                 }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Dealer Cards:");
+            foreach (Card card in game.GetDealerCards())
+            {
+                Console.WriteLine(card);
             }
 
             Console.ReadLine();

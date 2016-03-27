@@ -16,6 +16,7 @@ namespace CardGames.BlackJack
 
         public event EventHandler<Card> onReceivedCard;
         public event Action<IPlayer> onPlayerDied;
+        public event Action<IPlayer> onBlackJack;
 
         public bool Alive
         {
@@ -77,6 +78,15 @@ namespace CardGames.BlackJack
             }
         }
 
+        protected virtual void OnRaiseBlackJack()
+        {
+            Action<IPlayer> handler = onBlackJack;
+            if (handler != null)
+            {
+                handler(this);
+            }
+        }
+
         public void Stand()
         {
             doneWithTurn();
@@ -86,6 +96,17 @@ namespace CardGames.BlackJack
         {
             done = true;
             playerDone.PlayerDone(this);
+        }
+
+        public void Initialize()
+        {
+            for (int i = 0; i < 2; i++)
+                hand.AddCard(deck.NextCard());
+
+            if (hand.IsBlackJack())
+            {
+                OnRaiseBlackJack();
+            }
         }
 
         public Player(IBlackJackHand hand, IDeck deck, IPlayerDone playerDone)

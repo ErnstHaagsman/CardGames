@@ -20,6 +20,11 @@ namespace CardGames.BlackJack
         event Action<IPlayer> onPlayerDied;
 
         /// <summary>
+        /// This is fired when a player receives blackjack
+        /// </summary>
+        event Action<IPlayer> onBlackJack;
+
+        /// <summary>
         /// The player's hand
         /// </summary>
         IBlackJackHand Hand { get; }
@@ -51,5 +56,10 @@ namespace CardGames.BlackJack
         /// Either the player died, or he stood
         /// </summary>
         bool Done { get; }
+
+        /// <summary>
+        /// Add the initial two cards to the player's hand
+        /// </summary>
+        void Initialize();
     }
 }
