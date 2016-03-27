@@ -42,9 +42,7 @@
     <Compile Include="BlackJack\IBlackJackHand.cs" />
     <Compile Include="BlackJack\IPlayer.cs" />
     <Compile Include="BlackJack\IPlayerDone.cs" />
-    <Compile Include="BlackJack\IPlayerFactory.cs" />
     <Compile Include="BlackJack\Player.cs" />
-    <Compile Include="BlackJack\PlayerFactory.cs" />
     <Compile Include="CardGameException.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />
