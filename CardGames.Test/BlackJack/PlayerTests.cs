@@ -1,4 +1,6 @@
 ﻿using CardGames.BlackJack;
+using CardGames.Cards;
+using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
 using System;
@@ -47,6 +49,27 @@ namespace CardGames.Test.BlackJack
 
             // Assert
             Assert.AreEqual(1, calls);
+        }
+
+        [Test]
+        public void PlayerPropagatesOnBlackJack()
+        {
+            // Arrange - set up player
+            var mocker = new AutoMocker();
+            var hand = new Mock<IBlackJackHand>();
+
+            mocker.Use(hand);
+            var player = mocker.CreateInstance<Player>();
+
+            // Arrange - set up event listener
+            int calls = 0;
+            player.onBlackJack += (pl) => calls++;
+
+            // Act
+            hand.Raise(x => x.onBlackJack += null, hand.Object);
+
+            // Assert
+            Assert.AreEqual(1, calls, "Player raises the wrong number of onBlackJack calls");
         }
     }
 }

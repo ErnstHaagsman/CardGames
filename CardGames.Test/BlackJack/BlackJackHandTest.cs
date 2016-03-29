@@ -169,5 +169,20 @@ namespace CardGames.Test.BlackJack
             // Assert
             Assert.AreEqual(0, sut.CompareTo(other), "Dead Hands Don't Tie");
         }
+
+        [Test]
+        public void BlackJackHand_onBlackJackTest()
+        {
+            // Arrange
+            int calls = 0;
+            sut.onBlackJack += (o) => calls++;
+
+            // Act
+            sut.AddCard(new Card(Rank.Ten, Suit.Clubs));
+            sut.AddCard(new Card(Rank.Ace, Suit.Clubs));
+
+            // Assert
+            Assert.AreEqual(1, calls, "Hand onBlackJack called the wrong amount of times");
+        }
     }
 }

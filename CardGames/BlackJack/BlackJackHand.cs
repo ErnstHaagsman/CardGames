@@ -11,9 +11,15 @@ namespace CardGames.BlackJack
     {
         private List<Card> cards = new List<Card>(5);
 
+        public event Action<IBlackJackHand> onBlackJack;
+
         public void AddCard(Card card)
         {
             cards.Add(card);
+
+            // Check for blackjack, raise event if necessary
+            if (cards.Count == 2 && IsBlackJack())
+                OnRaiseBlackJack();
         }
 
         public int CompareTo(IBlackJackHand other)
@@ -117,6 +123,15 @@ namespace CardGames.BlackJack
                return true;
 
             return false;
+        }
+
+        protected virtual void OnRaiseBlackJack()
+        {
+            Action<IBlackJackHand> handler = onBlackJack;
+            if (handler != null)
+            {
+                handler(this);
+            }
         }
     }
 }

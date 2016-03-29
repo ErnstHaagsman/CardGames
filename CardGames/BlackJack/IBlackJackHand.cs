@@ -28,7 +28,7 @@ namespace CardGames.BlackJack
         int GetValue();
 
         /// <summary>
-        /// Is the player still alive?
+        /// Is the hand still alive?
         /// 
         /// False if value of hand over 21
         /// </summary>
@@ -42,5 +42,10 @@ namespace CardGames.BlackJack
         /// </summary>
         /// <returns></returns>
         bool IsBlackJack();
+
+        /// <summary>
+        /// This is fired when this hand gets its second card, and becomes blackjack
+        /// </summary>
+        event Action<IBlackJackHand> onBlackJack;
     }
 }

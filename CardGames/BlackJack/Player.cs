@@ -116,17 +116,14 @@ namespace CardGames.BlackJack
         {
             for (int i = 0; i < 2; i++)
                 hand.AddCard(deck.NextCard());
-
-            if (hand.IsBlackJack())
-            {
-                OnRaiseBlackJack();
-            }
         }
 
         public Player(IBlackJackHand hand, IDeck deck)
         {
             this.hand = hand;
             this.deck = deck;
+
+            hand.onBlackJack += (h) => OnRaiseBlackJack();
         }
     }
 }
