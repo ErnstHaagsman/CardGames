@@ -48,10 +48,12 @@
     <Compile Include="BlackJack\Dealers\StandOn17Dealer.cs" />
     <Compile Include="BlackJack\Dealers\StandOn17DealerFactory.cs" />
     <Compile Include="CardGameException.cs" />
+    <Compile Include="Cards\Hand.cs" />
     <Compile Include="Cards\Card.cs" />
     <Compile Include="Cards\Deck.cs" />
     <Compile Include="Cards\DeckOutOfCardsException.cs" />
     <Compile Include="Cards\IDeck.cs" />
+    <Compile Include="Cards\IHand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

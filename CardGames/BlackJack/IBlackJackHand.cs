@@ -7,20 +7,8 @@ using System.Threading.Tasks;
 
 namespace CardGames.BlackJack
 {
-    public interface IBlackJackHand : IComparable<IBlackJackHand>
+    public interface IBlackJackHand : IHand, IComparable<IBlackJackHand>
     {
-        /// <summary>
-        /// Add a card to the hand
-        /// </summary>
-        /// <param name="card"></param>
-        void AddCard(Card card);
-
-        /// <summary>
-        /// Returns an array of all cards currently in the hand
-        /// </summary>
-        /// <returns></returns>
-        Card[] GetCards();
-
         /// <summary>
         /// The numeric value of all cards in the hand
         /// </summary>

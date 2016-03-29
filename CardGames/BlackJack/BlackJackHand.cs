@@ -7,18 +7,16 @@ using CardGames.Cards;
 
 namespace CardGames.BlackJack
 {
-    public class BlackJackHand : IBlackJackHand
+    public class BlackJackHand : Hand, IBlackJackHand
     {
-        private List<Card> cards = new List<Card>(5);
-
         public event Action<IBlackJackHand> onBlackJack;
 
-        public void AddCard(Card card)
+        public override void AddCard(Card card)
         {
-            cards.Add(card);
+            base.AddCard(card);
 
             // Check for blackjack, raise event if necessary
-            if (cards.Count == 2 && IsBlackJack())
+            if (this.Count == 2 && IsBlackJack())
                 OnRaiseBlackJack();
         }
 
@@ -65,11 +63,6 @@ namespace CardGames.BlackJack
                 return 0;
         }
 
-        public Card[] GetCards()
-        {
-            return cards.ToArray();
-        }
-
         public int GetValue()
         {
             // We need to sum the ranks of the cards
@@ -78,9 +71,9 @@ namespace CardGames.BlackJack
             // to reduce the value by 10 for each until we are under 21
 
             int value = 0;
-            int aces = cards.Where(x => x.Rank == Rank.Ace).Count();
+            int aces = this.Where(x => x.Rank == Rank.Ace).Count();
             
-            foreach (Card card in cards)
+            foreach (Card card in this)
             {
                 switch(card.Rank)
                 {
@@ -115,11 +108,11 @@ namespace CardGames.BlackJack
 
         public bool IsBlackJack()
         {
-            if (cards.Count != 2)
+            if (this.Count != 2)
                 return false;
 
-            if (cards.Where(x => x.Rank == Rank.Ace).Count() == 1 &&
-                cards.Where(x => (int)x.Rank >= 10 && (int)x.Rank < 14).Count() == 1)
+            if (this.Where(x => x.Rank == Rank.Ace).Count() == 1 &&
+                this.Where(x => (int)x.Rank >= 10 && (int)x.Rank < 14).Count() == 1)
                return true;
 
             return false;
