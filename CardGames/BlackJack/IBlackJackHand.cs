@@ -35,5 +35,10 @@ namespace CardGames.BlackJack
         /// This is fired when this hand gets its second card, and becomes blackjack
         /// </summary>
         event Action<IBlackJackHand> onBlackJack;
+
+        /// <summary>
+        /// The state of this hand
+        /// </summary>
+        HandState State { get; set; }
     }
 }

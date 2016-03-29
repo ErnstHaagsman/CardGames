@@ -9,6 +9,11 @@ namespace CardGames.BlackJack
 {
     public class BlackJackHand : Hand, IBlackJackHand
     {
+        public HandState State
+        {
+            get; set;
+        }
+
         public event Action<IBlackJackHand> onBlackJack;
 
         public override void AddCard(Card card)

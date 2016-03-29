@@ -26,36 +26,31 @@ namespace CardGames.BlackJackCLI
             player.onPlayerDied += (pl) => Console.WriteLine("You died :(");
             player.onReceivedCard += (pl, card) => Console.WriteLine("You got a {0}", card);
 
-            while (true)
-            {
-                PlayGame();
-                Console.Clear();
-            }
+            PreGame();
         }
 
-        private static void PlayGame()
+        private static void PreGame()
         {
-            deck.Shuffle();
+            Game game = new Game(new StandOn17DealerFactory(), deck);
+            game.SetPlayer(player);
+
+            game.onNextState += Game_onNextState;
+
             player.Hand = new BlackJackHand();
-            Game game = new Game(deck, new StandOn17DealerFactory());
-            game.Player = player;
-
-            game.onPlayerWins +=
-                (s, pl) => Console.WriteLine("{0} Won!", pl.Name);
-
-            game.onPlayerTies +=
-                (s, pl) => Console.WriteLine("You tied!");
 
             game.StartGame();
+        }
 
-            Console.WriteLine("The Dealer's Open Card is: {0}", game.DealerOpenCard());
-
-            while (!game.Player.Done)
+        private static void inGame(IGame game)
+        {
+            while (game.State == GameState.InGame)
             {
+                Console.Clear();
+                Console.WriteLine("The Dealer's Open Card is: {0}", game.DealerOpenCard);
                 Console.WriteLine("Your cards:");
                 Console.WriteLine();
 
-                foreach (Card card in game.Player.Hand.GetCards())
+                foreach (Card card in game.CurrentHand)
                 {
                     Console.WriteLine(card);
                 }
@@ -71,11 +66,11 @@ namespace CardGames.BlackJackCLI
                     {
                         case "H":
                             hasInput = true;
-                            game.Player.Hit();
+                            game.Hit();
                             break;
                         case "S":
                             hasInput = true;
-                            game.Player.Stand();
+                            game.Stand();
                             break;
                         default:
                             Console.WriteLine("Please press 'H' to hit, or 'S' to stand");
@@ -83,15 +78,46 @@ namespace CardGames.BlackJackCLI
                     }
                 }
             }
+        }
 
+        private static void gameOver(IGame game)
+        {
+            Console.Clear();
+            Console.WriteLine("Your cards:");
+            Console.WriteLine();
+
+            foreach (Card card in game.CurrentHand)
+            {
+                Console.WriteLine(card);
+            }
             Console.WriteLine();
             Console.WriteLine("Dealer Cards:");
-            foreach (Card card in game.GetDealerCards())
+            foreach (Card card in game.DealerCards)
             {
                 Console.WriteLine(card);
             }
 
+            Console.WriteLine();
+            Console.WriteLine("Your hand {0}", game.CurrentHand.State);
+
+            Console.WriteLine();
+            Console.WriteLine("Press enter for a new game");
+
             Console.ReadLine();
+            PreGame();
+        }
+
+        private static void Game_onNextState(object sender, GameStateEventArgs e)
+        {
+            switch (e.NextState)
+            {
+                case GameState.InGame:
+                    inGame((IGame)sender);
+                    break;
+                case GameState.GameOver:
+                    gameOver((IGame)sender);
+                    break;
+            }
         }
     }
 }

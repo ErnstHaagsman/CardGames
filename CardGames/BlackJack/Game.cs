@@ -1,93 +1,99 @@
-﻿using CardGames.BlackJack.Dealers;
-using CardGames.Cards;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CardGames.Cards;
+using CardGames.BlackJack.Dealers;
+using CardGames.BlackJack.GameStates;
 
 namespace CardGames.BlackJack
 {
-    public class Game
+    public class Game : IGame, IGameStateInternal
     {
-        private IDeck deck;
-        private IDealer dealer;
+        private IGameState currentState;
 
-        private IPlayer player;
+        public event EventHandler<GameStateEventArgs> onNextState;
+
+        public IBlackJackHand CurrentHand
+        {
+            get
+            {
+                return currentState.CurrentHand;
+            }
+        }
+
+        public Card[] DealerCards
+        {
+            get
+            {
+                return currentState.DealerCards;
+            }
+        }
+
+        public Card DealerOpenCard
+        {
+            get
+            {
+                return currentState.DealerOpenCard;
+            }
+        }
+
         public IPlayer Player
         {
             get
             {
-                return player;
+                return currentState.Player;
             }
-            set
-            {
-                if (player != null)
-                    player.onTurnFinished -= Player_onTurnFinished;
-
-                player = value;
-                player.onTurnFinished += Player_onTurnFinished;
-            } 
         }
 
-        private void Player_onTurnFinished(IPlayer obj)
+        public GameState State
         {
-            dealer.Play();
+            get
+            {
+                return currentState.State;
+            }
         }
 
-        public event EventHandler<IPlayer> onPlayerWins;
-        public event EventHandler<IPlayer> onPlayerTies;
-
-        private void resolveWinner()
+        public void Hit()
         {
-            int compare = Player.Hand.CompareTo(dealer.Hand);
-            if (compare == 1)
-            {
-                onPlayerWins(this, Player);
-            }
-            else if (compare == -1)
-            {
-                onPlayerWins(this, dealer);
-            }
-            else
-            {
-                onPlayerTies(this, Player);
-            }
+            currentState.Hit();
+        }
+
+        public void MoveTo(IGameState next)
+        {
+            currentState = next;
+            RaiseOnNextState(next.State);
+        }
+
+        public void SetPlayer(IPlayer player)
+        {
+            currentState.SetPlayer(player);
+        }
+
+        public void Stand()
+        {
+            currentState.Stand();
         }
 
         public void StartGame()
         {
-            // Initial deal
-            dealer.Initialize();
-            Player.Initialize();
-
-            if (Player.Hand.IsBlackJack() || dealer.Hand.IsBlackJack())
-                resolveWinner();
+            currentState.StartGame();
         }
 
-        public Card DealerOpenCard()
+        private void RaiseOnNextState(GameState next)
         {
-            return dealer.OpenCard;
+            var handler = onNextState;
+            if (handler != null)
+            {
+                handler(this, new GameStateEventArgs(next));
+            }
         }
 
-        public Card[] GetDealerCards()
+        public Game(IDealerFactory dealerFactory, IDeck deck)
         {
-            return dealer.GetCards();
-        }
-
-        public Game(IDeck deck, IDealerFactory dealerFactory)
-        {
-            this.deck = deck;
-            dealer = dealerFactory.getDealer(new BlackJackHand(), deck);
-            dealer.Name = "Dealer";
-
-            dealer.onTurnFinished += Dealer_onTurnFinished; ;
-        }
-
-        private void Dealer_onTurnFinished(IPlayer obj)
-        {
-            resolveWinner();
-            dealer.onTurnFinished -= Dealer_onTurnFinished;
+            deck.Shuffle();
+            currentState = new PreGameState(this, dealerFactory, deck);
         }
     }
 }
