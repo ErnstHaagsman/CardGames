@@ -83,6 +83,7 @@ namespace CardGames.BlackJack.GameStates
             if (compare == 1)
             {
                 Player.Hand.State = HandState.Won;
+                Player.Balance += Player.Hand.Bet * 2;
             }
             else if (compare == -1)
             {
@@ -91,6 +92,7 @@ namespace CardGames.BlackJack.GameStates
             else
             {
                 Player.Hand.State = HandState.Tied;
+                Player.Balance += Player.Hand.Bet;
             }
         }
     }

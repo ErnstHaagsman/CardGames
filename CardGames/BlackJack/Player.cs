@@ -18,6 +18,8 @@ namespace CardGames.BlackJack
         public event Action<IPlayer> onBlackJack;
         public event Action<IPlayer> onTurnFinished;
 
+        public decimal Balance { get; set; }
+
         public bool Alive
         {
             get

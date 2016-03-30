@@ -66,5 +66,10 @@ namespace CardGames.BlackJack
         /// Add the initial two cards to the player's hand
         /// </summary>
         void Initialize();
+
+        /// <summary>
+        /// The amount of money the player has
+        /// </summary>
+        decimal Balance { get; set; }
     }
 }

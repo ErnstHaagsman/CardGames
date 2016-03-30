@@ -20,8 +20,10 @@ namespace CardGames.BlackJackCLI
             Console.WriteLine();
             Console.WriteLine("Please enter your name");
             string name = Console.ReadLine();
-            player = new Player(new BlackJackHand(), deck);
+            player = new Player(new BlackJackHand(0), deck);
             player.Name = name;
+            player.Balance = 1000;
+            Console.WriteLine("Hi {0}! You have {1:C} to bet with", player.Name, player.Balance);
 
             player.onPlayerDied += (pl) => Console.WriteLine("You died :(");
             player.onReceivedCard += (pl, card) => Console.WriteLine("You got a {0}", card);
@@ -36,7 +38,25 @@ namespace CardGames.BlackJackCLI
 
             game.onNextState += Game_onNextState;
 
-            player.Hand = new BlackJackHand();
+            Console.WriteLine("How much would you like to bet on your next hand?");
+            decimal? bet = null;
+            while(bet == null)
+            {
+                string betString = Console.ReadLine();
+
+                decimal placeholder;
+                if(Decimal.TryParse(betString, out placeholder))
+                {
+                    if (placeholder > 0) bet = placeholder;
+                }
+                else
+                {
+                    Console.WriteLine("That wasn't a valid bet, try any number over 0");
+                }
+            }
+
+            player.Hand = new BlackJackHand((decimal)bet);
+            player.Balance -= (decimal)bet;
 
             game.StartGame();
         }
@@ -101,10 +121,21 @@ namespace CardGames.BlackJackCLI
             Console.WriteLine("Your hand {0}", game.CurrentHand.State);
 
             Console.WriteLine();
-            Console.WriteLine("Press enter for a new game");
+            Console.WriteLine("You now have {0:C}", player.Balance);
 
-            Console.ReadLine();
-            PreGame();
+            if (player.Balance > 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Press enter for a new game");
+
+                Console.ReadLine();
+                PreGame();
+            }
+            else
+            {
+                Console.WriteLine("You're broke, get out!");
+                Console.ReadLine();
+            }
         }
 
         private static void Game_onNextState(object sender, GameStateEventArgs e)

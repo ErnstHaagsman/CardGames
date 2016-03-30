@@ -40,5 +40,10 @@ namespace CardGames.BlackJack
         /// The state of this hand
         /// </summary>
         HandState State { get; set; }
+
+        /// <summary>
+        /// The bet made on this hand
+        /// </summary>
+        decimal Bet { get; }
     }
 }

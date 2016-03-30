@@ -17,7 +17,7 @@ namespace CardGames.Test.BlackJack
         [SetUp]
         public void Init()
         {
-            sut = new BlackJackHand();
+            sut = new BlackJackHand(0);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace CardGames.Test.BlackJack
             sut.AddCard(new Card(Rank.Ace, Suit.Clubs));
             
             // Arrange other
-            IBlackJackHand other = new BlackJackHand();
+            IBlackJackHand other = new BlackJackHand(0);
             other.AddCard(new Card(Rank.Ten, Suit.Clubs));
             other.AddCard(new Card(Rank.Ace, Suit.Clubs));
 
@@ -110,7 +110,7 @@ namespace CardGames.Test.BlackJack
             sut.AddCard(new Card(Rank.Ace, Suit.Clubs));
 
             // Arrange other
-            IBlackJackHand other = new BlackJackHand();
+            IBlackJackHand other = new BlackJackHand(0);
             other.AddCard(new Card(Rank.Ten, Suit.Clubs));
             other.AddCard(new Card(Rank.Nine, Suit.Clubs));
             other.AddCard(new Card(Rank.Two, Suit.Clubs));
@@ -127,7 +127,7 @@ namespace CardGames.Test.BlackJack
             sut.AddCard(new Card(Rank.Two, Suit.Clubs));
 
             // Arrange other
-            IBlackJackHand other = new BlackJackHand();
+            IBlackJackHand other = new BlackJackHand(0);
             other.AddCard(new Card(Rank.Eight, Suit.Clubs));
             other.AddCard(new Card(Rank.Nine, Suit.Clubs));
 
@@ -143,7 +143,7 @@ namespace CardGames.Test.BlackJack
             sut.AddCard(new Card(Rank.Two, Suit.Clubs));
 
             // Arrange other
-            IBlackJackHand other = new BlackJackHand();
+            IBlackJackHand other = new BlackJackHand(0);
             other.AddCard(new Card(Rank.Eight, Suit.Clubs));
             other.AddCard(new Card(Rank.Nine, Suit.Clubs));
             other.AddCard(new Card(Rank.Seven, Suit.Clubs));
@@ -161,7 +161,7 @@ namespace CardGames.Test.BlackJack
             sut.AddCard(new Card(Rank.Queen, Suit.Clubs));
 
             // Arrange other
-            IBlackJackHand other = new BlackJackHand();
+            IBlackJackHand other = new BlackJackHand(0);
             other.AddCard(new Card(Rank.Eight, Suit.Clubs));
             other.AddCard(new Card(Rank.Nine, Suit.Clubs));
             other.AddCard(new Card(Rank.Seven, Suit.Clubs));

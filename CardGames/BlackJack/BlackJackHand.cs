@@ -14,6 +14,15 @@ namespace CardGames.BlackJack
             get; set;
         }
 
+        private decimal bet;
+        public decimal Bet
+        {
+            get
+            {
+                return bet;
+            }
+        }
+
         public event Action<IBlackJackHand> onBlackJack;
 
         public override void AddCard(Card card)
@@ -130,6 +139,11 @@ namespace CardGames.BlackJack
             {
                 handler(this);
             }
+        }
+
+        public BlackJackHand(decimal bet)
+        {
+            this.bet = bet;
         }
     }
 }
