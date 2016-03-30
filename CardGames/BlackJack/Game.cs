@@ -93,7 +93,7 @@ namespace CardGames.BlackJack
         public Game(IDealerFactory dealerFactory, IDeck deck)
         {
             deck.Shuffle();
-            currentState = new PreGameState(this, dealerFactory, deck);
+            currentState = new PreGameState(this, dealerFactory.getDealer(new BlackJackHand(), deck), deck);
         }
     }
 }

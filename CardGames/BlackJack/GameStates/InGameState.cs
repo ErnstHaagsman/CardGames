@@ -8,7 +8,7 @@ using CardGames.BlackJack.Dealers;
 
 namespace CardGames.BlackJack.GameStates
 {
-    class InGameState : IGameState
+    public class InGameState : IGameState
     {
         private IDeck deck;
         private IDealer dealer;

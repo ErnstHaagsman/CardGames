@@ -42,10 +42,19 @@
       <HintPath>..\packages\NUnit.3.2.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture, Version=3.43.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.3.43.0\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture.AutoMoq, Version=3.43.0.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoFixture.AutoMoq.3.43.0\lib\net40\Ploeh.AutoFixture.AutoMoq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackJack\BlackJackHandTest.cs" />
+    <Compile Include="BlackJack\GameStates\PreGameStateTests.cs" />
     <Compile Include="BlackJack\PlayerTests.cs" />
     <Compile Include="BlackJack\StandOn17DealerTests.cs" />
     <Compile Include="Cards\Deck.cs" />

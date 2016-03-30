@@ -8,7 +8,7 @@ using CardGames.BlackJack.Dealers;
 
 namespace CardGames.BlackJack.GameStates
 {
-    class PreGameState : IGameState
+    public class PreGameState : IGameState
     {
         private IDealer dealer;
         private IDeck deck;
@@ -73,8 +73,8 @@ namespace CardGames.BlackJack.GameStates
         public void StartGame()
         {
             // Initial deal
-            dealer.Initialize();
             Player.Initialize();
+            dealer.Initialize();
 
             if (dealer.Hand.IsBlackJack() || player.Hand.IsBlackJack())
                 gameStateInternal.MoveTo(new GameOverState(dealer, player));
@@ -82,12 +82,11 @@ namespace CardGames.BlackJack.GameStates
                 gameStateInternal.MoveTo(new InGameState(gameStateInternal, dealer, player, deck));
         }
 
-        public PreGameState(IGameStateInternal gameStateInternal, IDealerFactory dealerFactory, IDeck deck)
+        public PreGameState(IGameStateInternal gameStateInternal, IDealer dealer, IDeck deck)
         {
             this.gameStateInternal = gameStateInternal;
             this.deck = deck;
-
-            dealer = dealerFactory.getDealer(new BlackJackHand(), deck);
+            this.dealer = dealer;
         }
     }
 }
